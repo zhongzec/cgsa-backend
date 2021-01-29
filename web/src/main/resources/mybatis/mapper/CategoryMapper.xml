@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.usc.cgsa.web.dao.CategoryMapper">
+
+  <update id="createTable">
+    create table if not exists category
+    (
+      category_id bigint       not null AUTO_INCREMENT,
+      name        varchar(128) not null,
+      type        varchar(128) not null,
+      constraint category_pk
+        primary key (category_id)
+    )
+      ENGINE = InnoDB
+  </update>
+
+  <insert id="insert" parameterType="edu.usc.cgsa.web.model.Category" useGeneratedKeys="true" keyProperty="categoryId">
+    insert into category (name)
+    values (#{name})
+  </insert>
+
+  <delete id="deleteById">
+    delete
+    from category
+    where category_id = #{category_id};
+  </delete>
+
+  <select id="findById" resultType="edu.usc.cgsa.web.model.Category">
+    select *
+    from category
+    where category_id = #{category_id};
+  </select>
+
+  <select id="findAll" resultType="edu.usc.cgsa.web.model.Category">
+    select *
+    from category;
+  </select>
+
+  <select id="findAllByType" resultType="edu.usc.cgsa.web.model.Category">
+    select *
+    from category
+    where type = #{type};
+  </select>
+
+</mapper>

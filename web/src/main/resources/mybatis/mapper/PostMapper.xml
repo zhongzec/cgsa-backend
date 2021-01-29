@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.usc.cgsa.web.dao.PostMapper">
+
+  <update id="createTable">
+    create table if not exists post
+    (
+      post_id     bigint       not null AUTO_INCREMENT,
+      post_name   varchar(128) not null,
+      post_url    varchar(512) null,
+      category_id bigint       null,
+      image_url   varchar(50)  null,
+      description text         null,
+      constraint post_pk
+        primary key (post_id)
+    )
+      ENGINE = InnoDB
+  </update>
+
+  <insert id="insert" parameterType="edu.usc.cgsa.web.model.Post" useGeneratedKeys="true" keyProperty="postId">
+    insert into post (post_name, post_url, category_id)
+    values (#{postName}, #{postUrl}, #{categoryId})
+  </insert>
+
+  <delete id="deleteById">
+    delete
+    from post
+    where post_id = #{id};
+  </delete>
+
+  <select id="findById" resultType="edu.usc.cgsa.web.model.Post">
+    select *
+    from post
+    where post_id = #{id};
+  </select>
+
+  <select id="findAll" resultType="edu.usc.cgsa.web.model.Post">
+    select *
+    from post;
+  </select>
+
+  <select id="findByCategoryId" resultType="edu.usc.cgsa.web.model.Post">
+    select *
+    from post
+    where category_id = #{categoryId};
+  </select>
+
+</mapper>

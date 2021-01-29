@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.usc.cgsa.web.dao.BoardMemberMapper">
+
+  <update id="createTable">
+    create table if not exists board_member
+    (
+      id       bigint       not null AUTO_INCREMENT,
+      name     varchar(128) not null,
+      name_en  varchar(128) not null,
+      img      varchar(512) null,
+      title    varchar(32)  null,
+      title_en varchar(128) null,
+      duty     varchar(32)  null,
+      college  varchar(128) null,
+      major    varchar(64)  null,
+      linkedin varchar(256) null,
+      priority varchar(4)   null,
+      constraint board_member_pk
+        primary key (id)
+    )
+      ENGINE = InnoDB
+  </update>
+
+  <insert id="insert" parameterType="edu.usc.cgsa.web.model.BoardMember" useGeneratedKeys="true" keyProperty="id">
+    insert into board_member (name, name_en, img, title, title_en, duty, college, major, linkedin, priority)
+    values (#{name}, #{nameEn}, #{img}, #{title}, #{titleEn}, #{duty}, #{college}, #{major}, #{linkedin}, #{priority})
+  </insert>
+
+  <delete id="deleteById">
+    delete
+    from board_member
+    where id = #{id};
+  </delete>
+
+  <select id="findById" resultType="edu.usc.cgsa.web.model.BoardMember">
+    select *
+    from board_member
+    where id = #{id};
+  </select>
+
+  <select id="findAll" resultType="edu.usc.cgsa.web.model.BoardMember">
+    select *
+    from board_member;
+  </select>
+
+</mapper>

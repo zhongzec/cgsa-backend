@@ -1,0 +1,44 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: '3.8'
+
+# Define services
+services:
+  # App backend service
+  app-server:
+    image: ronannnn/usc-cgsa-web-backend:1.0.0
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - docker-mysql # This service depends on mysql. Start that first.
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+      - frontend
+
+  # Frontend Service
+  app-client:
+    image: ronannnn/usc-cgsa-web-frontend:1.0.0
+    ports:
+      - 81:3000
+    restart: always
+    stdin_open: true
+    depends_on:
+      - app-server
+    networks:
+      - frontend
+
+  # Database Service (Mysql)
+  docker-mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: cgsa
+      MYSQL_ROOT_PASSWORD: cgsa
+    networks:
+      - backend
+
+# Networks to be created to facilitate communication between containers
+networks:
+  backend:
+  frontend:

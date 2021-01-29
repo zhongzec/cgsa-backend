@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.usc.cgsa.web.dao.DepartmentMapper">
+
+  <update id="createTable">
+    create table if not exists department
+    (
+      id            bigint       not null AUTO_INCREMENT,
+      dept_name     varchar(32)  not null,
+      dept_name_en  varchar(64)  not null,
+      dept_img      varchar(512) null,
+      keyword       varchar(32)  null,
+      keyword_en    varchar(32)  null,
+      short_info    text         null,
+      short_info_en text         null,
+      detail        text         null,
+      detail_en     text         null,
+      constraint department_pk
+        primary key (id)
+    )
+      ENGINE = InnoDB
+  </update>
+
+  <insert id="insert" parameterType="edu.usc.cgsa.web.model.BoardMember" useGeneratedKeys="true" keyProperty="id">
+    insert into department (dept_name, dept_name_en, dept_img,
+                            keyword, keyword_en, short_info, short_info_en, detail, detail_en)
+    values (#{deptName}, #{deptNameEn}, #{deptImg},
+            #{keyword}, #{keywordEn}, #{shortInfo}, #{shortInfoEn}, #{detail}, #{detailEn})
+  </insert>
+
+  <delete id="deleteById">
+    delete
+    from department
+    where id = #{id};
+  </delete>
+
+  <select id="findById" resultType="edu.usc.cgsa.web.model.Department">
+    select *
+    from department
+    where id = #{id};
+  </select>
+
+  <select id="findAll" resultType="edu.usc.cgsa.web.model.Department">
+    select *
+    from department;
+  </select>
+
+</mapper>
